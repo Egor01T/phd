@@ -1,6 +1,8 @@
 package ru.example.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import ru.example.service.AlbumService;
 
 
 @Service
+@EnableCaching
 public class AlbumServiceImpl implements AlbumService{
     private final AlbumRepository albumRepo;
 
@@ -31,6 +34,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
 
     @Override
+    @Cacheable("photos_page")
     public Page<PhotoDTO> getPhotos(Pageable pageable) {
         Page<PhotoDTO> photos = albumRepo.findAll(pageable).map(PhotoDTO::convertToDTO);
         //photos.map(PhotoDTO::convertToDTO);
@@ -43,6 +47,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
     */
     @Override
+    @Cacheable("photos")
     public PhotoDTO getPhoto(String id) {
         return albumRepo.findById(id).map(PhotoDTO::convertToDTO).orElseThrow(() -> new RuntimeException("Фото с id=" + id + " не найдено"));
     }
