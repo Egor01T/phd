@@ -1,6 +1,8 @@
 package ru.example.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Page;
@@ -28,6 +30,8 @@ public class AlbumServiceImpl implements AlbumService{
     }
     */
     @Override
+    //@CachePut(value = "photos")
+    @CacheEvict(value = "photos_page",allEntries = true)
     public PhotoDTO createPhoto(PhotoDTO photo) {
         albumRepo.save(photo.convertToModel());
         return photo;
