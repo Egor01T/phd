@@ -1,11 +1,12 @@
 package ru.example.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import ru.example.model.Photo;
 import ru.example.model.Resolution;
 
-public class PhotoDTO {
+public class PhotoDTO implements Serializable {
     private String id;
     private String name;
     private String format;

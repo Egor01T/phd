@@ -47,7 +47,7 @@ public class AlbumServiceImpl implements AlbumService{
     }
     */
     @Override
-    @Cacheable("photos")
+    @Cacheable(value = "photos")
     public PhotoDTO getPhoto(String id) {
         return albumRepo.findById(id).map(PhotoDTO::convertToDTO).orElseThrow(() -> new RuntimeException("Фото с id=" + id + " не найдено"));
     }
